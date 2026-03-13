@@ -1,0 +1,7 @@
+dataset,type,n,p,truth_triplet
+Friedman1,synthetic,2000,10,None
+Ishigami,synthetic,2000,3,None
+Hartmann6D,synthetic,2000,6,None
+Friedman1_Mod,synthetic,2000,10,"(0, 1, 2)"
+Ishigami_Mod,synthetic,2000,3,"(0, 1, 2)"
+Hartmann6D_Mod,synthetic,2000,6,"(0, 3, 5)"

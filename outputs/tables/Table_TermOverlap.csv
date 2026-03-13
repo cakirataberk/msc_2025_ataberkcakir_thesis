@@ -1,0 +1,6 @@
+dataset,n_vanilla_pairs,n_scratch_pairs,n_scratch_triples,n_triples_with_vanilla_subpair,n_triples_without_vanilla_subpair,pct_overlap
+cpu_act,5,5,5,2,3,40.0
+elevators,5,5,5,5,0,100.0
+house_16H,5,5,5,2,3,40.0
+diamonds,3,3,3,2,1,66.7
+superconduct,5,5,5,0,5,0.0

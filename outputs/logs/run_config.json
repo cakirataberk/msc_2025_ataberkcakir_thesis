@@ -1,0 +1,11 @@
+{
+  "RUN_ID": "20260312-002757",
+  "DEBUG_MODE": false,
+  "GLOBAL_SEEDS": [
+    0,
+    1,
+    2
+  ],
+  "HAS_INTERPRET": true,
+  "HAS_XGBOOST": true
+}

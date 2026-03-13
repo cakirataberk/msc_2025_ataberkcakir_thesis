@@ -1,0 +1,200 @@
+[
+  {
+    "dataset": "Friedman1",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Friedman1",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Friedman1",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Friedman1_Mod",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Friedman1_Mod",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Friedman1_Mod",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami_Mod",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami_Mod",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Ishigami_Mod",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D_Mod",
+    "seed": 0,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D_Mod",
+    "seed": 1,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "Hartmann6D_Mod",
+    "seed": 2,
+    "n_train": 1600,
+    "n_test": 400
+  },
+  {
+    "dataset": "wine_quality",
+    "seed": 0,
+    "n_train": 1280,
+    "n_test": 319
+  },
+  {
+    "dataset": "wine_quality",
+    "seed": 1,
+    "n_train": 1280,
+    "n_test": 319
+  },
+  {
+    "dataset": "wine_quality",
+    "seed": 2,
+    "n_train": 1280,
+    "n_test": 319
+  },
+  {
+    "dataset": "abalone",
+    "seed": 0,
+    "n_train": 3342,
+    "n_test": 835
+  },
+  {
+    "dataset": "abalone",
+    "seed": 1,
+    "n_train": 3342,
+    "n_test": 835
+  },
+  {
+    "dataset": "abalone",
+    "seed": 2,
+    "n_train": 3342,
+    "n_test": 835
+  },
+  {
+    "dataset": "cpu_act",
+    "seed": 0,
+    "n_train": 6554,
+    "n_test": 1638
+  },
+  {
+    "dataset": "cpu_act",
+    "seed": 1,
+    "n_train": 6554,
+    "n_test": 1638
+  },
+  {
+    "dataset": "cpu_act",
+    "seed": 2,
+    "n_train": 6554,
+    "n_test": 1638
+  },
+  {
+    "dataset": "superconduct",
+    "seed": 0,
+    "n_train": 17011,
+    "n_test": 4252
+  },
+  {
+    "dataset": "superconduct",
+    "seed": 1,
+    "n_train": 17011,
+    "n_test": 4252
+  },
+  {
+    "dataset": "superconduct",
+    "seed": 2,
+    "n_train": 17011,
+    "n_test": 4252
+  },
+  {
+    "dataset": "diamonds",
+    "seed": 0,
+    "n_train": 43152,
+    "n_test": 10788
+  },
+  {
+    "dataset": "diamonds",
+    "seed": 1,
+    "n_train": 43152,
+    "n_test": 10788
+  },
+  {
+    "dataset": "diamonds",
+    "seed": 2,
+    "n_train": 43152,
+    "n_test": 10788
+  }
+]
