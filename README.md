@@ -60,7 +60,6 @@ Run blocks **in order** (top to bottom). Each block is self-contained after the 
 | BLOCK 13b | Term Overlap Analysis | **Table A.2** |
 | BLOCK 14 | Ablation: Cyclic Refit | **Table 5.5**, `Fig_Ablation_CyclicRefit` |
 | BLOCK 15 (Cell 47) | max_bins Sensitivity | **Table A.3** |
-| BLOCK 16 (Cell 48) | BIC Sweep — Real Datasets | Supporting analysis for §5.4, §6.4 |
 | BLOCK 17 (Cell 49) | FAST-3D Score Distribution | **Figure 5.1** (Friedman1_Mod) |
 
 ---
@@ -76,7 +75,7 @@ pip install -r requirements.txt
 ### 2. Open the notebook
 
 ```bash
-jupyter notebook Thesis_Final_Code_EarlyStop.ipynb
+jupyter notebook Thesis_Final_Code.ipynb
 ```
 
 ### 3. Run all blocks in order
@@ -91,16 +90,16 @@ jupyter notebook Thesis_Final_Code_EarlyStop.ipynb
 
 | Block | Approx. runtime |
 |-------|----------------|
-| BLOCK 6 (tuning) | ~30–60 min (first run only; cached thereafter) |
-| BLOCK 9 (standard synthetic) | ~15 min |
-| BLOCK 10 (modified synthetic) | ~25 min |
-| BLOCK 11 (BIC sweep) | ~40 min |
-| BLOCK 12 (Recall@K) | ~20 min |
-| BLOCK 13 (real datasets) | ~90–120 min |
-| BLOCK 14 (ablation) | ~30 min |
+| BLOCK 6 (tuning) | ~300 min (first run only; cached thereafter) |
+| BLOCK 9 (standard synthetic) | ~5 min |
+| BLOCK 10 (modified synthetic) | ~20 min |
+| BLOCK 11 (BIC sweep) | ~36 min |
+| BLOCK 12 (Recall@K) | ~10 min |
+| BLOCK 13 (real datasets) | ~150 min |
+| BLOCK 14 (ablation) | ~140 min |
 | **Total (excl. tuning)** | **~4–5 hours** |
 
-Runtimes measured on a MacBook Pro M2 (16 GB RAM), `N_JOBS=4`.  
+Runtimes measured on a MacBook Air M1 (8 GB RAM), `N_JOBS=4`.  
 On a standard laptop with fewer cores, expect 2–3× longer.
 
 ---
@@ -141,7 +140,7 @@ joblib >= 1.3
 Full pinned versions: see `requirements.txt`.
 
 The notebook was developed and tested on:
-- macOS 14 (Apple M2)
+- macOS 14 (Apple M1)
 - Python 3.10.12
 
 To check your environment after running BLOCK 1:
