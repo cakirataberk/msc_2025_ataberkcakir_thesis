@@ -47,20 +47,19 @@ Run blocks **in order** (top to bottom). Each block is self-contained after the 
 | BLOCK 1 | Installs & Imports | — |
 | BLOCK 2 | Core Algorithm | — (`SparseScratchEBM`, `ScratchEBMWithBagging`) |
 | BLOCK 3 | Model Wrappers | — |
-| BLOCK 4 | Dataset Suite | Table 4.1, Table 4.2 |
+| BLOCK 4 | Dataset Suite | Table 1, Table 2 |
 | BLOCK 5 | Splits | Deterministic train/test splits (saved to `outputs/splits/`) |
 | BLOCK 6 | Hyperparameter Tuning | `PerDataset_BestParams.json` (cached; skip if cache exists) |
 | BLOCK 7 | Build Models | — |
 | BLOCK 8 | Benchmark Engine | — (`run_benchmark()`, `summarize()`) |
-| BLOCK 9 | Standard Synthetic Benchmark | **Table 5.1**, `Fig_StandardSynthetic_RMSE` |
-| BLOCK 10 | Modified Synthetic Benchmark | **Table 5.2**, `Fig_ModifiedSynthetic_RMSE` |
-| BLOCK 11 | BIC Sweep (H3) | **Table A.1**, `Fig_BIC_Sweep_RMSE_vs_Terms` (→ Figure 5.2) |
-| BLOCK 12 | FAST-3D Recovery (H2) | **Table 5.3**, `Fig_FAST3D_RecallAtK` (→ Figure 5.1) |
-| BLOCK 13 | Real Dataset Benchmark | **Table 5.4**, `Fig_RealBenchmark_RMSE` |
-| BLOCK 13b | Term Overlap Analysis | **Table A.2** |
-| BLOCK 14 | Ablation: Cyclic Refit | **Table 5.5**, `Fig_Ablation_CyclicRefit` |
-| BLOCK 15 (Cell 47) | max_bins Sensitivity | **Table A.3** |
-| BLOCK 17 (Cell 49) | FAST-3D Score Distribution | **Figure 5.1** (Friedman1_Mod) |
+| BLOCK 9 | Standard Synthetic Benchmark | **Table 5** (H1 competitiveness leg) |
+| BLOCK 10 | Modified Synthetic Benchmark | **Table 6** (H1 gain leg + H2 found_rate) |
+| BLOCK 11 | BIC Sweep (H3) | **Table 10** (Appendix A.1), **Figure 3** |
+| BLOCK 12 | FAST-3D Recovery (H2) | **Table 7** + **Figure 2** (Friedman1_Mod score distribution) |
+| BLOCK 13 | Real Dataset Benchmark | **Table 8** (H4) |
+| BLOCK 13b | Term Overlap Analysis | **Table 11** (Appendix A.2) |
+| BLOCK 14 | Ablation: Cyclic Refit | **Table 9** |
+| BLOCK 15 | max_bins Sensitivity | **Table 12** (Appendix A.3) |
 
 ---
 
@@ -75,7 +74,7 @@ pip install -r requirements.txt
 ### 2. Open the notebook
 
 ```bash
-jupyter notebook Thesis_Final_Code.ipynb
+jupyter notebook Thesis_Final_Code_EarlyStop.ipynb
 ```
 
 ### 3. Run all blocks in order
@@ -106,21 +105,54 @@ On a standard laptop with fewer cores, expect 2–3× longer.
 
 ## Data
 
-All synthetic datasets are generated programmatically — no external data files required.
+### Synthetic Datasets
 
-Real datasets are fetched automatically from [OpenML](https://www.openml.org) via `sklearn.datasets.fetch_openml`. Internet access is required for the first run. Dataset IDs:
+All synthetic datasets are generated programmatically — no external data files required. The benchmark includes three standard and three modified variants (with planted 3-way signal), plus noise-augmented versions for H3 testing:
 
-| Dataset | OpenML ID | Source |
-|---------|-----------|--------|
-| abalone | 183 | OpenML-CTR23 |
-| cpu_act | 197 | OpenML-CTR23 |
-| diamonds | 42225 | OpenML-CTR23 |
-| elevators | 216 | OpenML |
-| house_16H | 44969 | OpenML |
-| superconduct | 43174 | OpenML-CTR23 |
-| wine_quality | 40691 | OpenML-CTR23 |
+| Dataset | DGP Type | Embedded Triplet |
+|---------|----------|-----------------|
+| Friedman1 | Mixed (pairwise + main) | — |
+| Ishigami | Trigonometric | — |
+| Hartmann6D | Exponential mixture | — |
+| Friedman1_Mod | Friedman1 + 25·sin(πx₀x₁x₂) | (0, 1, 2) |
+| Ishigami_Mod | Ishigami + 15·sin(x₀)sin(x₁)sin(x₂) | (0, 1, 2) |
+| Hartmann6D_Mod | Hartmann6D + 20·(x₀x₃x₅) | (0, 3, 5) |
+
+`*_ModNoise10` variants add K=10 uniform noise features to each modified dataset (used for H3 BIC sweep).
+
+### Real Datasets
+
+Real datasets are fetched automatically from [OpenML](https://www.openml.org) via `sklearn.datasets.fetch_openml`. Internet access is required for the first run. Only numeric features are used (`select_dtypes(include=[np.number])`).
+
+| Dataset | OpenML ID | n | p | Target | Source |
+|---------|-----------|---|---|--------|--------|
+| abalone | 183 | 4,177 | 7† | rings (age) | OpenML-CTR23 |
+| cpu_act | 197 | 8,192 | 21 | usr (CPU usage) | OpenML-CTR23 |
+| diamonds | 42225 | 53,940 | 6† | price (USD) | OpenML-CTR23 |
+| elevators | 216 | 16,599 | 18 | Goal (elevator action) | OpenML |
+| naval_propulsion_plant | 44969 | 11,934 | 14 | GT compressor decay coeff. | OpenML-CTR23 |
+| superconduct | 43174 | 21,263 | 81 | critical_temp | OpenML-CTR23 |
+| red_wine | 40691 | 1,599 | 11 | quality (wine score) | OpenML-CTR23 |
+
+† Categorical variables excluded: abalone (Sex; p: 8→7), diamonds (cut, color, clarity; p: 10→6).
 
 Reference: Fischer, S. F., Harutyunyan, L., Feurer, M., and Bischl, B. (2023). OpenML-CTR23 — A curated tabular regression benchmarking suite. *AutoML Conference 2023 (Workshop)*. https://openreview.net/forum?id=HebAOoMm94
+
+---
+
+## Models
+
+Four models are compared throughout the benchmark:
+
+| Model | Description |
+|-------|-------------|
+| 3-way EBM | Proposed model with FAST-3D + cyclic joint refit, BIC disabled (αBIC=0) |
+| 3-way EBM + BIC | Proposed model with Scaled-BIC backward pruning enabled |
+| Vanilla EBM | Standard `ExplainableBoostingRegressor` from interpretML (main effects + pairwise only) |
+| XGBoost | Regularized gradient boosting baseline (Chen & Guestrin, 2016) |
+| Random Forest | Bagging ensemble baseline (Breiman, 2001) |
+
+All EBM variants share the same core hyperparameters (fairness contract): `n_estimators`, `learning_rate`, `max_bins=32`, `interactions`, `outer_bags=5`, `early_stopping_rounds=200`.
 
 ---
 
@@ -158,6 +190,7 @@ print(sklearn.__version__, numpy.__version__, pandas.__version__, xgboost.__vers
 - Noise features in `*_ModNoise10` variants are generated with a separate RNG (`seed + 99999`) to ensure independence from the signal features.
 - Hyperparameter tuning results are cached in `outputs/hparam/PerDataset_BestParams.json`. The same cache file stores the per-dataset optimal BIC scale (`BIC_SCALE` key).
 - Trained models are saved to `outputs/models/` as `.pkl` files for post-hoc analysis (e.g., BLOCK 13b term overlap).
+- Bin boundaries `{Bj}` are computed once on training data and shared across all bags (global discretization).
 
 ---
 
