@@ -27,11 +27,10 @@ Experiments cover synthetic benchmarks with planted 3-way signals (H1–H3) and 
 ├── requirements.txt                   # Python package versions
 ├── Thesis_Final_Code_EarlyStop.ipynb  # Main experiment notebook (all blocks)
 └── outputs/                           # Auto-generated on run (not tracked by git)
-    ├── tables/                        # CSV + LaTeX tables
+    ├── tables/                        # CSV tables
     ├── figs/                          # PDF + PNG figures
     ├── splits/                        # Train/test split indices (.npy)
     ├── hparam/                        # Hyperparameter cache (PerDataset_BestParams.json)
-    ├── models/                        # Trained model objects (.pkl)
     └── logs/                          # Run configuration log
 ```
 
@@ -74,7 +73,7 @@ pip install -r requirements.txt
 ### 2. Open the notebook
 
 ```bash
-jupyter notebook Thesis_Final_Code_EarlyStop.ipynb
+jupyter notebook Thesis_Final_Code.ipynb
 ```
 
 ### 3. Run all blocks in order
@@ -189,8 +188,6 @@ print(sklearn.__version__, numpy.__version__, pandas.__version__, xgboost.__vers
 - Train/test splits (80/20) are pre-generated and saved as `.npy` files in `outputs/splits/`. Noise-augmented datasets reuse the split indices of their base `_Mod` variant.
 - Noise features in `*_ModNoise10` variants are generated with a separate RNG (`seed + 99999`) to ensure independence from the signal features.
 - Hyperparameter tuning results are cached in `outputs/hparam/PerDataset_BestParams.json`. The same cache file stores the per-dataset optimal BIC scale (`BIC_SCALE` key).
-- Trained models are saved to `outputs/models/` as `.pkl` files for post-hoc analysis (e.g., BLOCK 13b term overlap).
-- Bin boundaries `{Bj}` are computed once on training data and shared across all bags (global discretization).
 
 ---
 
@@ -203,9 +200,3 @@ If you use this code, please cite:
 in Explainable Boosting Machines. Master's Thesis, Department of Statistics,
 Ludwig-Maximilians-Universität München.
 ```
-
----
-
-## License
-
-MIT License. See `LICENSE` file.
